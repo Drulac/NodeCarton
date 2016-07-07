@@ -2,29 +2,6 @@ const util = require('util');
 const fs = require('fs');
 const PNG = require('pngjs').PNG;
 
-Array.prototype.aIndexOf = function(value) {
-	for(let i = 0; i < this.length; i++)
-	{
-		if(this[i] == value)
-		{
-			return i;
-		}
-	}
-	return -1;
-}
-
-Array.prototype.aAindexOf = function(value) {
-	for(let i = 0; i < this.length; i++)
-	{
-		let retour = this[i].indexOf(value);
-		if(retour != -1)
-		{
-			return {x: retour, y:i};
-		}
-	}
-	return -1;
-}
-
 fs.createReadStream("img/"+"collines.png")
 .pipe(new PNG({
 	filterType: 4
@@ -36,83 +13,6 @@ fs.createReadStream("img/"+"collines.png")
 	//traitement de l'image
 
 	data = potDePeinture(15, data, this.width, this.height);
-	
-	let w = this.width;
-	let h = this.height;
-
-	let seuil = 20;
-
-	for (let y = 0; y < data.length; y++) {
-		for (let x = 0; x < data[y].length; x++) {
-			let rr = data[y][x].r;
-			let gg = data[y][x].g;
-			let bb = data[y][x].b;
-			if(x < w-3)
-			{
-				let r = ((rr - data[y][x+1].r) + (rr - data[y][x+2].r) + (gg - data[y][x+3].g)) / 3;
-				let g = ((gg - data[y][x+1].g) + (gg - data[y][x+2].g) + (gg - data[y][x+3].g)) / 3;
-				let b = ((bb - data[y][x+1].b) + (bb - data[y][x+2].b) + (bb - data[y][x+3].b)) / 3;
-
-				if((r > seuil || r < 0-seuil) && (g > seuil || g < 0-seuil) && (b > seuil || b < 0-seuil)) {
-					data[y][x].r = 0;
-					data[y][x].g = 0;
-					data[y][x].b = 0;
-				}
-			}else if(x < w-2){
-				let r = ((rr - data[y][x+1].r) + (gg - data[y][x+2].g)) / 2;
-				let g = ((gg - data[y][x+1].g) + (gg - data[y][x+2].g)) / 2;
-				let b = ((bb - data[y][x+1].b) + (bb - data[y][x+2].b)) / 2;
-
-				if((r > seuil || r < 0-seuil) && (g > seuil || g < 0-seuil) && (b > seuil || b < 0-seuil)) {
-					data[y][x].r = 85;
-					data[y][x].g = 85;
-					data[y][x].b = 85;
-				}
-			}else if(x < w-1){
-				let r = (rr - data[y][x+1].r);
-				let g = (gg - data[y][x+1].g);
-				let b = (bb - data[y][x+1].b);
-
-				if((r > seuil || r < 0-seuil) && (g > seuil || g < 0-seuil) && (b > seuil || b < 0-seuil)) {
-					data[y][x].r = 170;
-					data[y][x].g = 170;
-					data[y][x].b = 170;
-				}
-			}
-			if(y < y-3)
-			{
-				let r = ((rr - data[y+1][x].r) + (rr - data[y+2][x].r) + (gg - data[y+3][x].g)) / 3;
-				let g = ((gg - data[y+1][x].g) + (gg - data[y+2][x].g) + (gg - data[y+3][x].g)) / 3;
-				let b = ((bb - data[y+1][x].b) + (bb - data[y+2][x].b) + (bb - data[y+3][x].b)) / 3;
-
-				if((r > seuil || r < 0-seuil) && (g > seuil || g < 0-seuil) && (b > seuil || b < 0-seuil)) {
-					data[y][x].r = 0;
-					data[y][x].g = 0;
-					data[y][x].b = 0;
-				}
-			}else if(y < h-2){
-				let r = ((rr - data[y+1][x].r) + (rr - data[y+2][x].r)) / 2;
-				let g = ((gg - data[y+1][x].g) + (gg - data[y+2][x].g)) / 2;
-				let b = ((bb - data[y+1][x].b) + (bb - data[y+2][x].b)) / 2;
-
-				if((r > seuil || r < 0-seuil) && (g > seuil || g < 0-seuil) && (b > seuil || b < 0-seuil)) {
-					data[y][x].r = 85;
-					data[y][x].g = 85;
-					data[y][x].b = 85;
-				}
-			}else if(y < h-1){
-				let r = (rr - data[y+1][x].r);
-				let g = (gg - data[y+1][x].g);
-				let b = (bb - data[y+1][x].b);
-
-				if((r > seuil || r < 0-seuil) && (g > seuil || g < 0-seuil) && (b > seuil || b < 0-seuil)) {
-					data[y][x].r = 170;
-					data[y][x].g = 170;
-					data[y][x].b = 170;
-				}
-			}
-		}
-	}
 
 	this.data = unconvertData(data);
 	this.pack().pipe(fs.createWriteStream('out.png'));
