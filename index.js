@@ -25,7 +25,7 @@ Array.prototype.aAindexOf = function(value) {
 	return -1;
 }
 
-fs.createReadStream("img/"+"collines.png")
+fs.createReadStream("test.png")
 .pipe(new PNG({
 	filterType: 4
 }))
