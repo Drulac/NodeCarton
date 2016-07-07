@@ -2,6 +2,29 @@ const util = require('util');
 const fs = require('fs');
 const PNG = require('pngjs').PNG;
 
+Array.prototype.aIndexOf = function(value) {
+	for(let i = 0; i < this.length; i++)
+	{
+		if(this[i] == value)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+Array.prototype.aAindexOf = function(value) {
+	for(let i = 0; i < this.length; i++)
+	{
+		let retour = this[i].indexOf(value);
+		if(retour != -1)
+		{
+			return {x: retour, y:i};
+		}
+	}
+	return -1;
+}
+
 fs.createReadStream("img/"+"collines.png")
 .pipe(new PNG({
 	filterType: 4
@@ -13,7 +36,7 @@ fs.createReadStream("img/"+"collines.png")
 	//traitement de l'image
 
 	data = potDePeinture(15, data, this.width, this.height);
-
+	
 	this.data = unconvertData(data);
 	this.pack().pipe(fs.createWriteStream('out.png'));
 });
