@@ -1,0 +1,19 @@
+{
+  "name": "nodecartoon",
+  "version": "0.1.0",
+  "description": "Donne un effet cartoon a une image",
+  "main": "index.js",
+  "dependencies": {
+    "pngjs": "^2.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Drulac/NodeCarton.git"
+  },
+  "author": "Drulac",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Drulac/NodeCarton/issues"
+  },
+  "homepage": "https://github.com/Drulac/NodeCarton#readme"
+}
