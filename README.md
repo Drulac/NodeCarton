@@ -1,7 +1,6 @@
 # NodeCarton
 
-Néccessite NodeJS 6.0 ou supérieur.
-
+Néccessite NodeJS 6.0 ou supérieur...
 téléchargez le zip et décompressez le.
 
 éxecutez `npm install` dans votre console.
